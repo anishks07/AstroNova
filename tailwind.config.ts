@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'display': ['Playfair Display', 'serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -26,7 +30,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -50,18 +55,29 @@ export default {
 				},
 				card: {
 					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
-				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+					foreground: 'hsl(var(--card-foreground))',
+					glass: 'hsl(var(--card-glass))',
+					glow: 'hsl(var(--card-glow))'
 				}
+			},
+			backgroundImage: {
+				'cosmic-gradient': 'var(--gradient-cosmic)',
+				'celestial-gradient': 'var(--gradient-celestial)',
+				'mystic-gradient': 'var(--gradient-mystic)'
+			},
+			boxShadow: {
+				'glow-gold': 'var(--glow-gold)',
+				'glow-purple': 'var(--glow-purple)',
+				'glow-soft': 'var(--glow-soft)',
+				'star-twinkle': 'var(--star-twinkle)'
+			},
+			animation: {
+				'twinkle': 'twinkle 4s ease-in-out infinite alternate',
+				'shoot': 'shoot 3s linear infinite',
+				'typing': 'typing 2s steps(40, end)',
+				'blink-caret': 'blink-caret 0.75s step-end infinite',
+				'accordion-down': 'accordion-down 0.2s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -70,25 +86,38 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
+				},
+				'twinkle': {
+					'0%': { opacity: '0.3' },
+					'50%': { opacity: '0.8' },
+					'100%': { opacity: '0.4' }
+				},
+				'shoot': {
+					'0%': { 
+						transform: 'translate(-100px, -100px) rotate(45deg)',
+						opacity: '0'
 					},
-					to: {
-						height: '0'
+					'10%': { opacity: '1' },
+					'90%': { opacity: '1' },
+					'100%': { 
+						transform: 'translate(100vw, 100vh) rotate(45deg)',
+						opacity: '0'
 					}
+				},
+				'typing': {
+					'from': { width: '0' },
+					'to': { width: '100%' }
+				},
+				'blink-caret': {
+					'from, to': { borderColor: 'transparent' },
+					'50%': { borderColor: 'hsl(var(--primary))' }
 				}
-			},
-			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
 			}
 		}
 	},
