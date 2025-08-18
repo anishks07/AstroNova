@@ -1,73 +1,149 @@
-# Welcome to your Lovable project
+# 🌟 AstroNova - AI Astrologer
 
-## Project info
+**Your Personalized Cosmic Guide** ✨
 
-**URL**: https://lovable.dev/projects/5d96cafd-b7c4-4964-b115-d92fa3e2b9af
+AstroNova is an AI-powered astrology application that provides personalized cosmic insights, horoscope readings, and interactive astrological consultations. Discover the secrets of the cosmos with modern AI technology combined with ancient astrological wisdom.
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+- **Personalized Birth Chart Analysis** - Enter your birth details for customized readings
+- **AI Astrologer Chat** - Interactive cosmic consultation with AI-powered responses  
+- **Beautiful Cosmic UI** - Stunning space-themed interface with animations
+- **Real-time Insights** - Get instant astrological guidance and predictions
+- **Responsive Design** - Works seamlessly on desktop and mobile devices
 
-**Use Lovable**
+## 🎯 Live Demo
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/5d96cafd-b7c4-4964-b115-d92fa3e2b9af) and start prompting.
+Experience AstroNova live at: [Your Deployment URL]
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Installation & Setup
 
-**Use your preferred IDE**
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn package manager
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+# Clone the repository
+git clone https://github.com/anishks07/AstroNova.git
 
-Follow these steps:
+# Navigate to project directory
+cd AstroNova
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+The application will be available at `http://localhost:8081`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🏗️ Tech Stack
 
-**Use GitHub Codespaces**
+This project is built with modern web technologies:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Core Technologies
+- **[Vite](https://vitejs.dev/)** - Fast build tool and development server
+- **[React 18](https://react.dev/)** - Modern React with hooks and concurrent features
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript development
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
 
-## What technologies are used for this project?
+### UI Components & Libraries
+- **[Radix UI](https://www.radix-ui.com/)** - Unstyled, accessible UI primitives
+- **[Lucide React](https://lucide.dev/)** - Beautiful & customizable SVG icons
+- **[Sonner](https://sonner.emilkowal.ski/)** - Toast notifications
+- **[React Router](https://reactrouter.com/)** - Client-side routing
 
-This project is built with:
+### Styling & Animations
+- **[Tailwind CSS Animate](https://github.com/jamiebuilds/tailwindcss-animate)** - Animation utilities
+- **Custom CSS** - Cosmic-themed animations and effects
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### State Management
+- **[TanStack Query](https://tanstack.com/query)** - Server state management
+- **React Hooks** - Local state management
 
-## How can I deploy this project?
+## 📱 Project Structure
 
-Simply open [Lovable](https://lovable.dev/projects/5d96cafd-b7c4-4964-b115-d92fa3e2b9af) and click on Share -> Publish.
+```
+src/
+├── components/
+│   └── ui/                    # Reusable UI components
+│       ├── hero-section.tsx   # Landing hero section
+│       ├── birth-details-form.tsx # Birth details input form
+│       ├── results-dashboard.tsx  # Astrology results display
+│       ├── cosmic-chat.tsx    # AI chat interface
+│       └── cosmic-footer.tsx  # Footer component
+├── pages/
+│   ├── Index.tsx              # Main application page
+│   └── NotFound.tsx           # 404 error page
+├── hooks/
+│   └── use-toast.ts           # Toast notification hook
+├── lib/
+│   └── utils.ts               # Utility functions
+└── assets/
+    └── cosmic-bg.jpg          # Background cosmic image
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 🎨 Features in Detail
 
-Yes, you can!
+### 🌌 Hero Section
+- Stunning cosmic background with animated shooting stars
+- Responsive design that works on all devices
+- Call-to-action button to begin the astrological journey
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### 📋 Birth Details Form
+- Clean, intuitive form for entering personal information
+- Real-time validation and user feedback
+- Glass-morphism design with cosmic theming
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### 📊 Results Dashboard
+- Comprehensive astrological profile display
+- Interactive cosmic elements and animations
+- Personalized insights based on birth data
+- Lucky numbers, colors, and compatibility features
+
+### 💬 AI Chat Interface
+- Interactive cosmic consultation
+- Real-time AI responses with astrological insights
+- Beautiful chat bubbles with cosmic styling
+- Typing indicators and smooth animations
+
+## 🚀 Deployment
+
+### Build for Production
+```bash
+npm run build
+```
+
+### Preview Production Build
+```bash
+npm run preview
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🌟 Acknowledgments
+
+- Created with modern React and TypeScript
+- UI components based on Radix UI primitives
+- Inspired by the cosmic beauty of the universe
+- Built for astrology enthusiasts and curious minds
+
+---
+
+**May the stars guide your journey through the cosmos** ✨

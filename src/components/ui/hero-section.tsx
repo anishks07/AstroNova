@@ -20,7 +20,7 @@ export function HeroSection() {
         <div className="mb-8">
           <Sparkles className="w-16 h-16 mx-auto mb-6 text-primary constellation-glow" />
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-glow">
-            AI Astrologer
+            AstroNova
           </h1>
           <p className="text-xl md:text-2xl text-primary-glow mb-2 font-medium">
             Your Personalized Cosmic Guide
