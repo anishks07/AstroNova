@@ -48,7 +48,7 @@ export function CosmicNavbar({ activeItem = "home", onItemClick }: CosmicNavbarP
     <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
       <div className="relative">
         {/* Main navbar container with true glass effect */}
-        <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-full px-6 py-3 shadow-lg">
+        <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-full px-6 py-2 shadow-lg">
           <div className="flex items-center space-x-2">
             {navItems.map((item, index) => {
               const Icon = item.icon;
