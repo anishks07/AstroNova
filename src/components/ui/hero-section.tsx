@@ -4,7 +4,7 @@ import cosmicBg from "@/assets/cosmic-bg.jpg";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center cosmic-bg overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center cosmic-bg overflow-hidden pt-20">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"

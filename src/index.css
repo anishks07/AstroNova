@@ -265,4 +265,25 @@
     width: 300px;
     height: 300px;
   }
+
+  /* Clean Glass Morphism Navbar */
+  .glass-navbar {
+    backdrop-filter: blur(16px) saturate(180%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  }
+
+  .glass-navbar-item {
+    transition: all 0.3s ease;
+  }
+
+  .glass-navbar-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+  }
+
+  .glass-navbar-item.active {
+    background: rgba(255, 255, 255, 0.15);
+  }
 }
