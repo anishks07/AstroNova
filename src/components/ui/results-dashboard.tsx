@@ -14,12 +14,17 @@ import {
 } from "lucide-react";
 
 interface ResultsDashboardProps {
-  name: string;
+  name?: string;
 }
 
 export function ResultsDashboard({ name }: ResultsDashboardProps) {
+  const isGuest = !name;
+
   // Mock data - in real app this would come from AI analysis
-  const personalityInsight = `${name}, you are a natural-born leader with a magnetic personality. Your cosmic blueprint reveals a strong connection to Jupiter's wisdom and Venus's creativity. You possess an innate ability to inspire others while maintaining deep emotional intelligence. The stars suggest you're entering a period of spiritual growth and material abundance.`;
+  const displayName = name ?? "Seeker";
+  const personalityInsight = isGuest
+    ? `${displayName}, this is a sample personality overview. Submit your birth details for a personalized reading.`
+    : `${displayName}, you are a natural-born leader with a magnetic personality. Your cosmic blueprint reveals a strong connection to Jupiter's wisdom and Venus's creativity. You possess an innate ability to inspire others while maintaining deep emotional intelligence. The stars suggest you're entering a period of spiritual growth and material abundance.`;
   
   const zodiacSigns = [
     { type: "Sun", sign: "Leo", icon: Sun, description: "Your core essence" },
@@ -38,13 +43,18 @@ export function ResultsDashboard({ name }: ResultsDashboardProps) {
   return (
     <section className="py-20 px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h2 className="text-4xl font-bold mb-4 text-glow">
             Your Cosmic Profile
           </h2>
           <p className="text-lg text-muted-foreground">
-            Welcome to your personalized astrological journey, {name}
+            Welcome to your personalized astrological journey, {displayName}
           </p>
+          {isGuest && (
+            <div className="mt-4 inline-block px-4 py-2 rounded-md bg-primary/10 text-primary text-sm">
+              Viewing sample dashboard — enter birth details for a fully personalized report
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">

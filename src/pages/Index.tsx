@@ -30,9 +30,9 @@ const Index = () => {
     // Scroll to appropriate section
     const sectionMap = {
       home: "hero-section",
-      dashboard: birthDetails ? "dashboard-section" : "birth-form-section",
+      dashboard: "dashboard-section",
       reading: "birth-form-section",
-      chat: birthDetails ? "chat-section" : "birth-form-section"
+      chat: "chat-section"
     };
     
     const targetSection = sectionMap[section as keyof typeof sectionMap];
@@ -43,41 +43,63 @@ const Index = () => {
     }
   };
 
-  // Determine active section based on content state
-  const getActiveSection = () => {
-    if (!birthDetails) {
-      return activeSection === "chat" || activeSection === "dashboard" ? "reading" : activeSection;
+  const renderContent = () => {
+    switch (activeSection) {
+      case "home":
+        return (
+          <>
+            <div id="hero-section">
+              <HeroSection />
+            </div>
+            <div id="birth-form-section">
+              <BirthDetailsForm onSubmit={handleFormSubmit} />
+            </div>
+          </>
+        );
+      
+      case "reading":
+        return (
+          <div id="birth-form-section">
+            <BirthDetailsForm onSubmit={handleFormSubmit} />
+          </div>
+        );
+      
+      case "dashboard":
+        return (
+          <div id="dashboard-section">
+            {/* If user hasn't provided birth details, show a sample/guest dashboard */}
+            <ResultsDashboard name={birthDetails?.name} />
+          </div>
+        );
+      
+      case "chat":
+        return birthDetails ? (
+          <div id="chat-section">
+            <CosmicChat />
+          </div>
+        ) : (
+          <div id="birth-form-section">
+            <div className="text-center py-20">
+              <h2 className="text-3xl font-bold mb-4 text-primary">Please provide your birth details first</h2>
+              <p className="text-muted-foreground mb-8">We need your birth information to start your cosmic consultation.</p>
+            </div>
+            <BirthDetailsForm onSubmit={handleFormSubmit} />
+          </div>
+        );
+      
+      default:
+        return null;
     }
-    return activeSection;
   };
 
   return (
     <div className="min-h-screen cosmic-bg">
       <CosmicNavbar 
-        activeItem={getActiveSection()} 
+        activeItem={activeSection} 
         onItemClick={handleNavClick}
       />
       
-      <div id="hero-section">
-        <HeroSection />
-      </div>
-      
-      {!birthDetails ? (
-        <div id="birth-form-section">
-          <BirthDetailsForm onSubmit={handleFormSubmit} />
-        </div>
-      ) : (
-        <>
-          <div id="dashboard-section">
-            <ResultsDashboard name={birthDetails.name} />
-          </div>
-          {(activeSection === "chat") && (
-            <div id="chat-section">
-              <CosmicChat />
-            </div>
-          )}
-        </>
-      )}
+      {renderContent()}
       
       <CosmicFooter />
     </div>
