@@ -1,3 +1,5 @@
+![AstroNova](public/astro-landing.png)
+
 # 🌟 AstroNova - AI Astrologer
 
 **Your Personalized Cosmic Guide** ✨
