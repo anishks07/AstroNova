@@ -259,7 +259,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- **AI Services**: Powered by Groq, Gemini, Brave Search, and HuggingFace
+- **AI Services**: Powered by Groq, OpenRouter,Gemini, Brave Search,FireCrawl and HuggingFace
 - **UI Framework**: Built with React and Tailwind CSS
 - **Workflow Engine**: Automated with n8n
 - **Design Inspiration**: The cosmic beauty of the universe ✨
