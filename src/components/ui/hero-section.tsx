@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
 import cosmicBg from "@/assets/cosmic-bg.jpg";
 
 export function HeroSection() {
@@ -18,7 +17,11 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         <div className="mb-8">
-          <Sparkles className="w-16 h-16 mx-auto mb-6 text-primary constellation-glow" />
+          <img 
+            src="/astronova.png" 
+            alt="AstroNova Logo" 
+            className="w-20 h-20 mx-auto mb-6 constellation-glow"
+          />
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-glow">
             AstroNova
           </h1>
