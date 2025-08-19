@@ -19,6 +19,17 @@ const Index = () => {
   const [birthDetails, setBirthDetails] = useState<BirthDetails | null>(null);
   const [activeSection, setActiveSection] = useState<ActiveSection>("home");
 
+  const handleBeginJourney = () => {
+    setActiveSection("reading");
+    // Scroll to birth form section
+    setTimeout(() => {
+      const element = document.getElementById("birth-form-section");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100);
+  };
+
   const handleFormSubmit = (details: BirthDetails) => {
     setBirthDetails(details);
     
@@ -51,16 +62,19 @@ const Index = () => {
     setActiveSection(section as ActiveSection);
     
     // Scroll to appropriate section
-    const sectionMap = {
-      home: "hero-section",
-      reading: "birth-form-section"
-    };
-    
-    const targetSection = sectionMap[section as keyof typeof sectionMap];
-    const element = document.getElementById(targetSection);
-    
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (section === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (section === "reading") {
+      // When clicking "Get Reading", scroll to form or show only form
+      setTimeout(() => {
+        const element = document.getElementById("birth-form-section");
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          // If we're in reading-only mode, scroll to top
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, 100);
     }
   };
 
@@ -70,7 +84,7 @@ const Index = () => {
         return (
           <>
             <div id="hero-section">
-              <HeroSection />
+              <HeroSection onBeginJourney={handleBeginJourney} />
             </div>
             <div id="birth-form-section">
               <BirthDetailsForm onSubmit={handleFormSubmit} />
@@ -80,9 +94,11 @@ const Index = () => {
       
       case "reading":
         return (
-          <div id="birth-form-section">
-            <BirthDetailsForm onSubmit={handleFormSubmit} />
-          </div>
+          <>
+            <div className="pt-20"> {/* Add padding to account for fixed navbar */}
+              <BirthDetailsForm onSubmit={handleFormSubmit} />
+            </div>
+          </>
         );
       
       default:

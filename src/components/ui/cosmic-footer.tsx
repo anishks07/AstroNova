@@ -20,7 +20,7 @@ export function CosmicFooter() {
         {/* Footer Text */}
         <p className="text-muted-foreground text-sm">
           Built with ❤️ by{' '}
-          <span className="text-primary font-medium">Your Name</span>
+          <span className="text-primary font-medium">Anish Konda</span>
         </p>
         
         <p className="text-xs text-muted-foreground mt-2">

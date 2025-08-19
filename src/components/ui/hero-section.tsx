@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import cosmicBg from "@/assets/cosmic-bg.jpg";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  onBeginJourney?: () => void;
+}
+
+export function HeroSection({ onBeginJourney }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center cosmic-bg overflow-hidden pt-20">
       {/* Background Image */}
@@ -37,6 +41,7 @@ export function HeroSection() {
         <Button 
           size="lg" 
           className="btn-cosmic ripple text-lg px-8 py-6 rounded-2xl font-semibold shadow-glow-gold"
+          onClick={onBeginJourney}
         >
           Begin My Journey ✨
         </Button>
