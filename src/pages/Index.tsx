@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HeroSection } from "@/components/ui/hero-section";
 import { BirthDetailsForm } from "@/components/ui/birth-details-form";
-import { ResultsDashboard } from "@/components/ui/results-dashboard";
 import { CosmicFooter } from "@/components/ui/cosmic-footer";
 import { CosmicNavbar } from "@/components/ui/cosmic-navbar";
 
@@ -13,7 +12,7 @@ interface BirthDetails {
   placeOfBirth: string;
 }
 
-type ActiveSection = "home" | "dashboard" | "reading";
+type ActiveSection = "home" | "reading";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -54,7 +53,6 @@ const Index = () => {
     // Scroll to appropriate section
     const sectionMap = {
       home: "hero-section",
-      dashboard: "dashboard-section",
       reading: "birth-form-section"
     };
     
@@ -84,14 +82,6 @@ const Index = () => {
         return (
           <div id="birth-form-section">
             <BirthDetailsForm onSubmit={handleFormSubmit} />
-          </div>
-        );
-      
-      case "dashboard":
-        return (
-          <div id="dashboard-section">
-            {/* If user hasn't provided birth details, show a sample/guest dashboard */}
-            <ResultsDashboard name={birthDetails?.name} />
           </div>
         );
       

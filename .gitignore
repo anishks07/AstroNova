@@ -26,6 +26,8 @@ api-test.js
 workflow-test*.html
 BACKEND_SETUP.md
 TESTING.md
+src/components/ui/results-dashboard.tsx
+setup-verify.js
 
 # Editor directories and files
 .vscode/*

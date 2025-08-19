@@ -1,0 +1,230 @@
+{
+  "name": "AI Astronomer Multi-Source",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300],
+      "parameters": {
+        "path": "astronomy-chat",
+        "httpMethod": "POST",
+        "responseMode": "lastNode"
+      }
+    },
+    {
+      "id": "2",
+      "name": "Prepare Prompt",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [400, 300],
+      "parameters": {
+        "functionCode": "return [{\n  question: $json[\"question\"],\n  prompt: `As an expert astronomer, analyze this question and provide a detailed response: ${$json[\"question\"]}`\n}];"
+      }
+    },
+    {
+      "id": "3",
+      "name": "Brave Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [650, 50],
+      "parameters": {
+        "url": "https://api.search.brave.com/res/v1/web/search?q={{$json[\"question\"]}}",
+        "method": "GET",
+        "authentication": "headerAuth"
+      },
+      "credentials": {
+        "httpHeaderAuth": "Brave API"
+      }
+    },
+    {
+      "id": "4",
+      "name": "Groq LLM",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [650, 150],
+      "parameters": {
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "method": "POST",
+        "authentication": "headerAuth",
+        "jsonParameters": true,
+        "body": {
+          "model": "mixtral-8x7b-32768",
+          "messages": [
+            {
+              "role": "user",
+              "content": "{{$json[\"prompt\"]}}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": "Groq API"
+      }
+    },
+    {
+      "id": "5",
+      "name": "HuggingFace QA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [650, 250],
+      "parameters": {
+        "url": "https://api-inference.huggingface.co/models/deepset/roberta-base-squad2",
+        "method": "POST",
+        "authentication": "headerAuth",
+        "jsonParameters": true,
+        "body": {
+          "inputs": {
+            "question": "{{$json[\"question\"]}}",
+            "context": "The solar system contains planets, stars, distances, and scientific facts. Answer only about astronomy."
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": "HuggingFace"
+      }
+    },
+    {
+      "id": "6",
+      "name": "Zai API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [650, 350],
+      "parameters": {
+        "url": "https://api.z.ai/v1/chat/completions",
+        "method": "POST",
+        "authentication": "headerAuth",
+        "jsonParameters": true,
+        "body": {
+          "model": "zai-llm",
+          "messages": [
+            {
+              "role": "user",
+              "content": "{{$json[\"prompt\"]}}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": "Zai API"
+      }
+    },
+    {
+      "id": "7",
+      "name": "Gemini API (Synthesizer)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [900, 300],
+      "parameters": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={{$credentials.httpHeaderAuth.apiKey}}",
+        "method": "POST",
+        "authentication": "none",
+        "jsonParameters": true,
+        "body": {
+          "contents": [
+            {
+              "role": "user",
+              "parts": [
+                {
+                  "text": "You are an expert astronomer. Multiple APIs provided answers:\n\nBrave: {{$json[\"brave\"]}}\nGroq: {{$json[\"groq\"]}}\nHuggingFace: {{$json[\"huggingface\"]}}\nZai: {{$json[\"zai\"]}}\nFirecrawl: {{$json[\"firecrawl\"]}}\n\nSynthesize the best, most accurate, and detailed explanation to the question: {{$json[\"question\"]}}"
+                }
+              ]
+            }
+          ],
+          "generationConfig": {
+            "temperature": 0.7,
+            "maxOutputTokens": 600
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": "Gemini API"
+      }
+    },
+    {
+      "id": "8",
+      "name": "Firecrawl API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [650, 450],
+      "parameters": {
+        "url": "https://api.firecrawl.dev/v0/crawl",
+        "method": "POST",
+        "authentication": "headerAuth",
+        "jsonParameters": true,
+        "body": {
+          "url": "https://en.wikipedia.org/wiki/Astronomy",
+          "question": "{{$json[\"question\"]}}"
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": "Firecrawl"
+      }
+    },
+    {
+      "id": "9",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1150, 300],
+      "parameters": {
+        "responseBody": "={{$json}}"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Prepare Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Prompt": {
+      "main": [
+        [
+          { "node": "Brave Search", "type": "main", "index": 0 },
+          { "node": "Groq LLM", "type": "main", "index": 0 },
+          { "node": "HuggingFace QA", "type": "main", "index": 0 },
+          { "node": "Zai API", "type": "main", "index": 0 },
+          { "node": "Firecrawl API", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Brave Search": {
+      "main": [
+        [{ "node": "Gemini API (Synthesizer)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Groq LLM": {
+      "main": [
+        [{ "node": "Gemini API (Synthesizer)", "type": "main", "index": 0 }]
+      ]
+    },
+    "HuggingFace QA": {
+      "main": [
+        [{ "node": "Gemini API (Synthesizer)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Zai API": {
+      "main": [
+        [{ "node": "Gemini API (Synthesizer)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Firecrawl API": {
+      "main": [
+        [{ "node": "Gemini API (Synthesizer)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Gemini API (Synthesizer)": {
+      "main": [
+        [{ "node": "Respond to Webhook", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}

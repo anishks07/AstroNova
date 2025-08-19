@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Home, BarChart3, Sparkles, MessageCircle } from "lucide-react";
+import { Home, Sparkles, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -19,11 +19,6 @@ const navItems: NavItem[] = [
     id: "home",
     label: "Home",
     icon: Home,
-  },
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: BarChart3,
   },
   {
     id: "reading",
