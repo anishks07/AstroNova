@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { HeroSection } from "@/components/ui/hero-section";
 import { BirthDetailsForm } from "@/components/ui/birth-details-form";
 import { ResultsDashboard } from "@/components/ui/results-dashboard";
-import { CosmicChat } from "@/components/ui/cosmic-chat";
 import { CosmicFooter } from "@/components/ui/cosmic-footer";
 import { CosmicNavbar } from "@/components/ui/cosmic-navbar";
 
@@ -13,26 +13,49 @@ interface BirthDetails {
   placeOfBirth: string;
 }
 
-type ActiveSection = "home" | "dashboard" | "reading" | "chat";
+type ActiveSection = "home" | "dashboard" | "reading";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [birthDetails, setBirthDetails] = useState<BirthDetails | null>(null);
   const [activeSection, setActiveSection] = useState<ActiveSection>("home");
 
   const handleFormSubmit = (details: BirthDetails) => {
     setBirthDetails(details);
-    setActiveSection("dashboard");
+    
+    // Save birth details to localStorage for the chat
+    localStorage.setItem('birthDetails', JSON.stringify(details));
+    
+    // Navigate directly to chat after form submission
+    navigate('/chat');
   };
 
   const handleNavClick = (section: string) => {
+    if (section === "chat") {
+      // Check if we have birth details before navigating to chat
+      if (birthDetails || localStorage.getItem('birthDetails')) {
+        navigate('/chat');
+      } else {
+        // If no birth details, show the reading form first
+        setActiveSection("reading");
+        // Scroll to birth form section
+        setTimeout(() => {
+          const element = document.getElementById("birth-form-section");
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 100);
+      }
+      return;
+    }
+    
     setActiveSection(section as ActiveSection);
     
     // Scroll to appropriate section
     const sectionMap = {
       home: "hero-section",
       dashboard: "dashboard-section",
-      reading: "birth-form-section",
-      chat: "chat-section"
+      reading: "birth-form-section"
     };
     
     const targetSection = sectionMap[section as keyof typeof sectionMap];
@@ -69,21 +92,6 @@ const Index = () => {
           <div id="dashboard-section">
             {/* If user hasn't provided birth details, show a sample/guest dashboard */}
             <ResultsDashboard name={birthDetails?.name} />
-          </div>
-        );
-      
-      case "chat":
-        return birthDetails ? (
-          <div id="chat-section">
-            <CosmicChat />
-          </div>
-        ) : (
-          <div id="birth-form-section">
-            <div className="text-center py-20">
-              <h2 className="text-3xl font-bold mb-4 text-primary">Please provide your birth details first</h2>
-              <p className="text-muted-foreground mb-8">We need your birth information to start your cosmic consultation.</p>
-            </div>
-            <BirthDetailsForm onSubmit={handleFormSubmit} />
           </div>
         );
       

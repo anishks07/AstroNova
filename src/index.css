@@ -242,6 +242,64 @@
     50% { border-color: hsl(var(--primary)); }
   }
 
+  /* Additional animation for chat typing cursor */
+  .animate-blink-caret {
+    animation: blink-caret 1s infinite;
+  }
+
+  /* Floating animation for celestial elements */
+  @keyframes float {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg);
+    }
+    33% { 
+      transform: translateY(-10px) rotate(1deg);
+    }
+    66% { 
+      transform: translateY(-5px) rotate(-1deg);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Enhanced constellation lines that glow */
+  .constellation-line {
+    stroke: hsl(var(--primary) / 0.3);
+    stroke-width: 1;
+    filter: drop-shadow(0 0 2px hsl(var(--primary) / 0.5));
+    transition: all 0.3s ease;
+  }
+
+  .constellation-line:hover {
+    stroke: hsl(var(--primary) / 0.8);
+    filter: drop-shadow(0 0 8px hsl(var(--primary) / 0.8));
+  }
+
+  /* Mystical scroll gradient for chat messages */
+  .chat-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent;
+  }
+
+  .chat-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chat-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .chat-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, hsl(var(--primary) / 0.3), hsl(var(--accent) / 0.3));
+    border-radius: 10px;
+  }
+
+  .chat-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, hsl(var(--primary) / 0.6), hsl(var(--accent) / 0.6));
+  }
+
   /* Ripple Effect */
   .ripple {
     position: relative;

@@ -122,7 +122,7 @@ export function BirthDetailsForm({ onSubmit }: BirthDetailsFormProps) {
                 className="w-full btn-cosmic ripple text-lg py-6 rounded-xl font-semibold mt-8"
                 disabled={!details.name || !details.dateOfBirth || !details.timeOfBirth || !details.placeOfBirth}
               >
-                Generate My Horoscope ✨
+                Chat with Your Cosmic Guide ✨
               </Button>
             </form>
           </CardContent>
