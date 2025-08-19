@@ -4,6 +4,8 @@ import { CosmicChat } from "@/components/ui/cosmic-chat";
 // You can set your AI backend URL here or use environment variables
 const AI_BACKEND_URL = import.meta.env.VITE_AI_BACKEND_URL || ""; // Add your backend URL here
 
+console.log("🔧 AI_BACKEND_URL:", AI_BACKEND_URL);
+
 const Chat = () => {
   const location = useLocation();
   const navigate = useNavigate();

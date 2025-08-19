@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Sparkles, Settings, Star, Zap, Heart, TrendingUp, ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Send, Sparkles, Bot, ArrowLeft, Settings, Star, Heart, TrendingUp, Zap } from "lucide-react";
 
 interface Message {
   id: string;
   text: string;
   isUser: boolean;
   timestamp: Date;
-  isTyping?: boolean;
 }
 
 interface BirthDetails {
@@ -20,12 +20,15 @@ interface BirthDetails {
 }
 
 interface CosmicChatProps {
-  birthDetails?: BirthDetails;
+  birthDetails: BirthDetails | null;
   backendUrl?: string;
 }
 
 export function CosmicChat({ birthDetails, backendUrl }: CosmicChatProps) {
   const navigate = useNavigate();
+  
+  // Generate a unique session ID for this chat session
+  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -87,35 +90,53 @@ export function CosmicChat({ birthDetails, backendUrl }: CosmicChatProps) {
   };
 
   // AI API call function
-  const callAI = async (userMessage: string) => {
+  const callAI = async (userInput: string): Promise<string> => {
+    console.log('[CosmicChat] callAI called with:', { userInput, backendUrl });
+    
     if (!backendUrl) {
-      // Fallback to random responses if no backend URL provided
+      console.log('[CosmicChat] No backend URL provided, using fallback');
       return aiResponses[Math.floor(Math.random() * aiResponses.length)];
     }
 
     try {
+      console.log('[CosmicChat] Making API call to:', backendUrl);
       const response = await fetch(backendUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: userMessage,
-          birthDetails: birthDetails,
-          context: "astrological_consultation"
+          user_input: userInput,
+          session: sessionId,
+          birth_details: birthDetails,
         }),
       });
 
+      console.log('[CosmicChat] API response status:', response.status);
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      return data.response || data.message || "The cosmic energies are unclear at the moment. Please try again! ✨";
+      console.log('[CosmicChat] API response data:', data);
+      
+      // Handle n8n webhook response format
+      if (data.output) {
+        return data.output;
+      } else if (data.response) {
+        return data.response;
+      } else if (typeof data === 'string') {
+        return data;
+      } else if (data.message) {
+        return data.message;
+      }
+      
+      console.log('[CosmicChat] Unknown response format, using fallback');
+      return aiResponses[Math.floor(Math.random() * aiResponses.length)];
     } catch (error) {
-      console.error('AI API Error:', error);
-      return "The cosmic connection seems unstable. Let me try a different approach... " + 
-             aiResponses[Math.floor(Math.random() * aiResponses.length)];
+      console.error('[CosmicChat] API call failed:', error);
+      return aiResponses[Math.floor(Math.random() * aiResponses.length)];
     }
   };
 
